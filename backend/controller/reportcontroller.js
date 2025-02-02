@@ -2,43 +2,34 @@ const User = require("../models/userModel");
 const Report = require("../models/reportModel"); 
 const Comment = require("../models/commentModel");
 const createReport = async (req, res) => {
-  const { email, heading, topic, description, tags } = req.body;
+  const { email, heading, topic, description, tags } = req.body; 
 
   try {
-    if (!email || !heading || !topic) {
-      return res.status(400).json({
-        message: "Email, heading, and topic are required fields.",
-      });
+    if (!email || !heading || !topic || !description) {
+      return res.status(400).json({ message: "All fields are required." });
     }
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ message: "User not found." });
+      return res.status(404).json({ message: "User not found" });
     }
-t
+
     const newReport = new Report({
       heading,
       topic,
       description,
+      tags,
       createdBy: user._id,
-      tags, 
     });
+    await newReport.save();
 
-    const savedReport = await newReport.save();
-    user.reports.push(savedReport._id);
-    await user.save();
-    res.status(201).json({
-      message: "Report created and linked to the user successfully.",
-      report: savedReport,
-    });
+    res.status(201).json({ message: "Report created successfully", report: newReport });
   } catch (error) {
     console.error("Error creating report:", error);
-    res.status(500).json({
-      message: "An error occurred while creating the report.",
-      error: error.message,
-    });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
 
 const getCommentsByReportId = async (req, res) => {
     const { reportId } = req.body;
@@ -84,5 +75,16 @@ const getCommentsByReportId = async (req, res) => {
       res.status(500).json({ message: "Server error", error: error.message });
     }
   };
+  const getAllReports =  async (req, res) => {
+    try {
+        const reports = await Report.find()
+            .populate("createdBy", "username email") 
+            .exec();
 
-module.exports = { createReport,getCommentsByReportId,updateReport };
+        res.status(200).json(reports);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch reports" });
+    }
+  }
+
+module.exports = { createReport,getCommentsByReportId,updateReport,getAllReports };

@@ -1,0 +1,523 @@
+/* Container for all reports */
+.reports-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+    width: 1350px;
+    margin: auto;
+  }
+  
+  /* Individual report card */
+  .report-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+    border-left: 5px solid #007BFF;
+    position: relative;
+  }
+  
+  .report-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Report header with user info */
+  .report-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    overflow: hidden;
+  }
+  
+  .user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .default-avatar {
+    width: 100%;
+    height: 100%;
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #fff;
+  }
+  
+  .user-info h4 {
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  .user-info p {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  /* Report title and topic */
+  .report-heading {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+  
+  /* Report description */
+  .report-description {
+    margin-bottom: 20px;
+  }
+  
+  .report-description p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  .report-description strong {
+    color: #007BFF;
+    font-weight: bold;
+  }
+  
+  /* Report tags */
+  .report-tags {
+    margin-bottom: 20px;
+  }
+  
+  .report-tags p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  /* Report button */
+  .toggle-comments-btn {
+    background-color: #007BFF;
+    color: #ffffff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+  
+  .toggle-comments-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+  
+  .toggle-comments-btn:focus {
+    outline: none;
+  }
+  
+  /* Comments Section */
+  .comments-section {
+    margin-top: 20px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  /* Single comment */
+  .comment {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding: 12px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 16px;
+    overflow: hidden;
+  }
+  
+  .comment-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .default-avatar {
+    width: 100%;
+    height: 100%;
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #fff;
+  }
+  
+  .comment-text {
+    flex-grow: 1;
+  }
+  
+  .comment p {
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
+  }
+  
+  .comment p strong {
+    color: #007BFF;
+    font-weight: 600;
+  }
+  
+  /* Timestamp for comment */
+  .comment-timestamp {
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-top: 8px;
+  }
+  
+  /* Responsive layout */
+  @media (max-width: 768px) {
+    .reports-container {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  
+    .report-card {
+      width: 90%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .report-card {
+      width: 100%;
+    }
+  }
+  /* Modal Style */
+.edit-form-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+  
+  .edit-form-modal form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .edit-form-modal input,
+  .edit-form-modal textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .edit-form-modal button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .edit-form-modal button[type="button"] {
+    background-color: #f44336;
+  }
+  
+  .edit-form-modal button:hover {
+    background-color: #45a049;
+  }
+  /* Container for all reports */
+.reports-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Styling for each report card */
+  .report-card {
+   
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Styling for the header section of the report */
+  .report-header {
+    display: flex;
+    justify-content: space-between; /* Pushes the button to the right */
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  /* Styling for user info section */
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Avatar container */
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+  }
+  
+  .user-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+  
+  /* User details container (username and email) */
+  .user-details h4 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .user-details p {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+  }
+  
+  /* Styling for the edit button */
+  .edit-btn {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    color: #3498db;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .edit-btn:hover {
+    background-color: #3498db;
+    color: #fff;
+  }
+  
+  .edit-btn svg {
+    margin-right: 5px; /* Space between the icon and text */
+  }
+  
+  /* Styling for report heading */
+  .report-heading {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-top: 10px;
+  }
+  
+  /* Styling for the description section */
+  .report-description {
+    margin-top: 15px;
+  }
+  
+  .report-description strong {
+    font-weight: 600;
+  }
+  
+  /* Styling for report tags */
+  .report-tags {
+    margin-top: 10px;
+  }
+  
+  .report-tags strong {
+    font-weight: 600;
+  }
+  
+  /* Styling for comments button */
+  .toggle-comments-btn {
+    background-color: #3498db;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+  }
+  
+  .toggle-comments-btn:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Styling for the comments section */
+  .comments-section {
+    margin-top: 20px;
+    background: #f4f6f9;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  
+  .comment {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  
+    margin-right: 10px;
+  }
+  
+  .comment-text {
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 5px;
+    max-width: 500px;
+  }
+  
+  /* Responsive design adjustments */
+  @media (max-width: 768px) {
+    .report-card {
+      padding: 15px;
+    }
+  
+    .user-info {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .edit-btn {
+      font-size: 14px;
+    }
+  
+    .report-heading {
+      font-size: 1.6rem;
+    }
+  }
+  /* Styling for the edit form container */
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  /* Styling for the input fields in the edit form */
+  .edit-form input,
+  .edit-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-size: 1rem;
+    color: #333;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  
+  /* Focus effect on input and textarea */
+  .edit-form input:focus,
+  .edit-form textarea:focus {
+    border-color: #3498db;
+    background-color: #fff;
+    outline: none;
+  }
+  
+  /* Styling for the Save and Cancel buttons */
+  .edit-form button {
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+  
+  .edit-form button:first-child {
+    background-color: #3498db;
+    margin-right: 10px;
+  }
+  
+  .edit-form button:first-child:hover {
+    background-color: #2980b9;
+  }
+  
+  .edit-form button:last-child {
+    background-color: #e74c3c;
+  }
+  
+  .edit-form button:last-child:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Styling for input and textarea placeholders */
+  .edit-form input::placeholder,
+  .edit-form textarea::placeholder {
+    color: #aaa;
+  }
+  
+  /* Responsive design for edit form on small screens */
+  @media (max-width: 768px) {
+    .edit-form {
+      padding: 15px;
+    }
+  
+    .edit-form input,
+    .edit-form textarea {
+      font-size: 0.9rem;
+    }
+  
+    .edit-form button {
+      font-size: 0.9rem;
+    }
+  }
+ .savebtn
+ {
+    background-color: #3498db;
+ }

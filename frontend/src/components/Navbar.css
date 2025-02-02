@@ -1,0 +1,127 @@
+/* Navbar.css */
+
+/* General Navbar Styles */
+.navbar-container {
+    background-color: #343a40;
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .navbar-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+  
+  .navbar-logo-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #f0f0f0;
+    cursor: pointer;
+  }
+  
+  .navbar-items {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  
+  /* Search Bar */
+  .search-input {
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+    width: 250px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Filter Dropdown */
+  .filter-dropdown {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    background-color: #f8f9fa;
+    font-size: 1rem;
+    width: 180px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Navigation Buttons */
+  .nav-button {
+    padding: 8px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Hover effects for the buttons */
+  .nav-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Dropdown option styling */
+  .filter-option {
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #fff;
+    border: none;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .navbar-container {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 15px 20px;
+    }
+  
+    .navbar-logo-container {
+      margin-bottom: 10px;
+    }
+  
+    .navbar-items {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .search-input {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .filter-dropdown {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .nav-button {
+      width: 100%;
+    }
+  }
+  

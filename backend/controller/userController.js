@@ -96,6 +96,7 @@ const updateUser = async(req,res)=>
     });
 
     await user.save(); 
+    console.log("updating"+user)
     res.status(200).json({ message: "User updated successfully", user });
   } catch (error) {
     console.error("Error updating user:", error);

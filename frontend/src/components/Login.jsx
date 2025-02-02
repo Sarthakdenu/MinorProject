@@ -75,6 +75,9 @@ function Login() {
     e.preventDefault();
 
     const token = localStorage.getItem("jwt");
+    localStorage.setItem('email',loginData.email)
+    const email = localStorage.getItem('email')
+    console.log(email)
     console.log(token)
     try {
       const response = await fetch('http://localhost:3001/api/login', {
@@ -91,7 +94,11 @@ function Login() {
 
       const data = await response.json();
       if (response.ok && data.success) {
+        
         <Navigate to="/home" />
+        localStorage.setItem('email',data.user.email)
+        const email = localStorage.getItem("email")
+        console.log(email)
         toast.success('User logged in successfully');
         setIsLoggedIn(true);
         setuser({
@@ -101,6 +108,7 @@ function Login() {
           jwt: data.token,
         });
         localStorage.setItem('jwt', data.token);
+       
         setLoginData({ email: "", password: "" });
         
       } else {

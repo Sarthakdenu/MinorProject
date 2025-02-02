@@ -5,7 +5,6 @@ const User = require("../models/userModel");       // Import User model
 const createComment = async (req, res) => {
   const { reportId, description, email } = req.body; 
   try {
-    // Step 1: Find the user by email
     const user = await User.findOne({ email: email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
