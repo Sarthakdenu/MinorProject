@@ -8,4 +8,5 @@
     align-items: center;
     justify-content: flex-start;
     gap: 1px;
+    background: linear-gradient(135deg, #02fffb, #d63e3e, #ff758c);
   }

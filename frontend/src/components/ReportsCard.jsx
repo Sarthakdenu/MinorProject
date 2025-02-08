@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ReportsCard.css';
-import { FaEdit } from 'react-icons/fa';  
+import { FaEdit } from 'react-icons/fa';
 
-const ReportsCard = ({useremail}) => {
+const ReportsCard = ({ useremail, reportKey }) => {
   const [reports, setReports] = useState([]);
   const [error, setError] = useState(null);
   const [comments, setComments] = useState({});
@@ -14,7 +14,7 @@ const ReportsCard = ({useremail}) => {
   const [updatedDescription, setUpdatedDescription] = useState('');
   const [updatedTags, setUpdatedTags] = useState('');
 
-  const email = useremail|| localStorage.getItem('email'); 
+  const email = useremail || localStorage.getItem('email');
 
   useEffect(() => {
     const fetchReports = async () => {
@@ -86,13 +86,17 @@ const ReportsCard = ({useremail}) => {
   const handleCancelEdit = () => {
     setEditingReport(null);
   };
+ console.log("key is" +reportKey)
+  const filteredReports = reportKey
+    ? reports.filter(report => report._id === reportKey) 
+    : reports;  
 
   if (loading) return <div>Loading reports...</div>;
   if (error) return <div>{error}</div>;
 
   return (
     <div className="reports-container">
-      {reports.map((report) => (
+      {filteredReports.map((report) => (
         <div key={report._id} className="report-card">
           <div className="report-header">
             <div className="user-info">
