@@ -4,6 +4,7 @@ import { FaEnvelope, FaPhoneAlt, FaUserTie, FaUser, FaBriefcase, FaRegBuilding, 
 import './UserProfile.css'; 
 import ReportsCard from './ReportsCard';
 import Navbar from './Navbar';
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
   const email = localStorage.getItem('email'); 
@@ -14,7 +15,9 @@ const UserProfile = () => {
   const [isCreatingReport, setIsCreatingReport] = useState(false); 
   const [updatedUser, setUpdatedUser] = useState({}); 
   const [newReport, setNewReport] = useState({ heading: '', topic: '', description: '', tags: [] });  
-
+  const goToOtherApp = () => {
+    window.location.href = "http://localhost:3003"; // Navigates to second app
+  };
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -95,6 +98,7 @@ const UserProfile = () => {
               >
                 <FaEdit /> Edit Profile
               </button>
+              <button className="edit-btn" onClick={goToOtherApp}>Create Room</button>;
               <button
                 className="edit-btn"
                 onClick={() => setIsCreatingReport(!isCreatingReport)}  

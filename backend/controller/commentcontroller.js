@@ -40,5 +40,26 @@ const createComment = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+const upvoteComment = async (req, res) => {
+  try {
+    const { commentId } = req.body;
 
-module.exports = { createComment };
+    // Find the comment by ID
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    // Increment the upvote count
+    comment.upvotes = (comment.upvotes || 0) + 1;
+
+    // Save the updated comment
+    await comment.save();
+
+    res.status(200).json({ message: "Upvoted successfully", updatedComment: comment });
+  } catch (error) {
+    console.error("Error upvoting comment:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+module.exports = { createComment,upvoteComment };

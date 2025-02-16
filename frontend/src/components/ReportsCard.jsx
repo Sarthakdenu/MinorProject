@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ReportsCard.css';
-import { FaEdit } from 'react-icons/fa';
+import { FaEdit,FaThumbsUp } from 'react-icons/fa';
 
 const ReportsCard = ({ useremail, reportKey }) => {
   const [reports, setReports] = useState([]);
@@ -13,6 +13,9 @@ const ReportsCard = ({ useremail, reportKey }) => {
   const [updatedTopic, setUpdatedTopic] = useState('');
   const [updatedDescription, setUpdatedDescription] = useState('');
   const [updatedTags, setUpdatedTags] = useState('');
+
+  const [newComment, setNewComment] = useState('');
+
 
   const email = useremail || localStorage.getItem('email');
 
@@ -57,6 +60,28 @@ const ReportsCard = ({ useremail, reportKey }) => {
     setUpdatedDescription(report.description);
     setUpdatedTags(report.tags?.join(', ') || '');
   };
+  
+  const handleCreateComment = async (reportId) => {
+    try {
+      const itememail = localStorage.getItem('email'); 
+      console.log("fixing bug")
+      console.log(itememail)
+      if (!newComment.trim()) return;
+      const response = await axios.post('http://localhost:3001/api/createComment', {
+        reportId,
+        description: newComment,
+        email:itememail,
+      });
+      
+      setComments((prevComments) => ({
+        ...prevComments,
+        [reportId]: [...(prevComments[reportId] || []), response.data.comment],
+      }));
+      setNewComment('');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error creating comment');
+    }
+  };
 
   const handleUpdateReport = async (reportId) => {
     try {
@@ -80,6 +105,32 @@ const ReportsCard = ({ useremail, reportKey }) => {
       setEditingReport(null); 
     } catch (err) {
       setError(err.response?.data?.message || 'Error updating report');
+    }
+  };
+  const handleUpvote = async (commentId, reportId) => {
+    const upvotedComments = JSON.parse(localStorage.getItem("upvotedComments")) || [];
+  
+    if (upvotedComments.includes(commentId)) {
+      alert("You have already upvoted this comment!");
+      return;
+    }
+  
+    try {
+      const response = await axios.post("http://localhost:3001/api/upvoteComment", { commentId });
+  
+      // Update the UI with the new upvote count
+      setComments((prevComments) => ({
+        ...prevComments,
+        [reportId]: prevComments[reportId].map((comment) =>
+          comment._id === commentId ? { ...comment, upvotes: (comment.upvotes || 0) + 1 } : comment
+        ).sort((a, b) => (b.upvotes || 0) - (a.upvotes || 0)), // Sort after upvoting
+      }));
+  
+      // Store the upvoted comment ID in localStorage
+      upvotedComments.push(commentId);
+      localStorage.setItem("upvotedComments", JSON.stringify(upvotedComments));
+    } catch (err) {
+      console.error("Error upvoting comment:", err);
     }
   };
 
@@ -159,6 +210,16 @@ const ReportsCard = ({ useremail, reportKey }) => {
                 <strong>Tags:</strong>
                 <p>{report.tags?.join(', ')}</p>
               </div>
+              <div className="comment-input-container">
+  <button onClick={() => handleCreateComment(report._id)}>Create Comment</button>
+  <input
+    type="text"
+    placeholder="Write a comment..."
+    value={newComment}
+    onChange={(e) => setNewComment(e.target.value)}
+  />
+</div>
+
               <button
                 className="toggle-comments-btn"
                 onClick={() => handleCommentsToggle(report._id)}
@@ -167,15 +228,30 @@ const ReportsCard = ({ useremail, reportKey }) => {
               </button>
               {comments[report._id] && (
                 <div className="comments-section">
-                  {comments[report._id].map((comment) => (
-                    <div key={comment._id} className="comment">
-                      <div className="comment-avatar"></div>
-                      <div className="comment-text">
-                        <p><strong>{comment.createdBy.username}:</strong> {comment.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                {comments[report._id] && Array.isArray(comments[report._id]) ? (
+  comments[report._id]
+    .sort((a, b) => (b.upvotes || 0) - (a.upvotes || 0))
+    .map((comment) => (
+      <div key={comment._id} className="comment">
+        <div className="comment-avatar">{comment.createdBy?.username?.[0] || "U"}</div>
+        <div className="comment-text">
+          <p><strong>{comment.createdBy?.username || "Unknown"}:</strong> {comment.description}</p>
+        </div>
+        <button
+          className={`upvote-btn ${JSON.parse(localStorage.getItem("upvotedComments"))?.includes(comment._id) ? "disabled" : ""}`}
+          onClick={() => handleUpvote(comment._id, report._id)}
+          disabled={JSON.parse(localStorage.getItem("upvotedComments"))?.includes(comment._id)}
+        >
+          <FaThumbsUp /> {comment.upvotes || 0}
+        </button>
+      </div>
+    ))
+) : (
+  <p>No comments yet.</p>
+)}
+
+              </div>
+              
               )}
             </>
           )}

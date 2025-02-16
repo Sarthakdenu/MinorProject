@@ -2,7 +2,8 @@ const express = require("express");
 const authenticateToken = require("../middlewares/authenticateToken");
 const { register, login, getUser , updateUser,findUserByEmail,getReportsByUserEmail} = require("../controller/userController");
 const {createReport,getCommentsByReportId,updateReport,getAllReports}=require('../controller/reportcontroller')
-const {createComment}=require('../controller/commentcontroller')
+const {createComment,upvoteComment}=require('../controller/commentcontroller')
+
 const router = express.Router();
 
 router.route("/register").post(register);
@@ -16,4 +17,5 @@ router.route('/getReportsByUserEmail').post(getReportsByUserEmail)
 router.route('/getCommentsByReportId').post(getCommentsByReportId)
 router.route('/updateReport').put(updateReport)
 router.route('/getAllReports').get(getAllReports);
+router.route('/upvoteComment').post(upvoteComment)
 module.exports = router;

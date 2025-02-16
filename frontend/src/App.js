@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import Home from './components/Home'
 import UserProfile from './components/UserProfile';
 import ReportsCard from './components/ReportsCard';
+
 function App() {
   return (
    
@@ -20,6 +21,10 @@ function App() {
               <Link to="/profile">PROFILE</Link></li>
               <li>
               <Link to="/report">REPORT</Link></li>
+              <li>
+              <Link to="/room">room</Link></li>
+              <li>
+              <Link to="/collab">collab</Link></li>
               
              
           </ul>
@@ -31,6 +36,7 @@ function App() {
         <Route path='/home' element={<Home/>}/>
         <Route path='/profile' element={<UserProfile/>} />
         <Route path='/report' element={<ReportsCard/>}/>
+       
        
         </Routes>
         <div class="footer">
